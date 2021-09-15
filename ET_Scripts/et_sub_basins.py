@@ -22,7 +22,7 @@ from cartopy.io.shapereader import Reader
 # ds_daily = ds.resample(time='1D').mean('time')
 #%% Use this section to calculate total ET and conversion ###
 # Loading daily data obtained earlier #
-ds = xr.open_dataset('D:/Evap_IMDAA/evap_daily.nc') # change the folder accordingly
+ds = xr.open_dataset('evap_daily.nc') # change the folder accordingly
 ## Tot ET = Soil Evap + Canopy EVap
 ds_tot_et = ds.EVARSS_sfc+ds.EVARSS_sfc # Total Et in kg/m2/s
 #####
@@ -32,7 +32,7 @@ ds_tot_et = ds_tot_et*86400 # Tot ET in mm/day
 #%%Use this section to extract the area masked nc file using shapefile ###
 ## Load the shapefile corresponding to each sub-basin ###
 ### By default I loaded the whole Kaveri basin ###
-fname = 'D:/Walter/Geospatial_DB/Geospatial_DB/cauvery_subbasins.shp' # change the file accordingly
+fname = 'sub_basins_shp_1to9/sub1.shp' # change the file accordingly
 shape = gpd.read_file(fname, crs='epsg:4326')
 ########################
 ## mask the tot ET array using shapefile ###
@@ -53,7 +53,7 @@ ds_daily_wm=ds_daily_wm.to_pandas()
 ds_1d_wm = pd.Series(data=ds_daily_wm, name = 'ET (mm/day)')
 ####
 ## Saving as csv file ####
-ds_1d_wm.to_csv('D:/et_kaveri.csv')   # change folder accordingly
+ds_1d_wm.to_csv('ET_Scripts/et_kaveri.csv')   # change folder accordingly
 #%% Plotting the time-series ###
 ### Ignore if no pro-plot package ####
 # fig, axs = plot.subplots(ncols=1 ,width=10, height=5, nrows=1, sharey=False, sharex=False)
