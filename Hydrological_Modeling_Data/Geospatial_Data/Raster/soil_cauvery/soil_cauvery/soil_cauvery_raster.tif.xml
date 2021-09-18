@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xml:lang="en"><Esri><CreaDate>20210413</CreaDate><CreaTime>12291400</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process ToolSource="c:\program files (x86)\arcgis\desktop10.5\ArcToolbox\Toolboxes\Conversion Tools.tbx\PolygonToRaster" Date="20210413" Time="122914">PolygonToRaster cauvery_soil FAOSOIL D:\Hydrosheds\soil_cauvery\soil_cauvery_raster.tif CELL_CENTER NONE 0.014</Process></lineage></DataProperties></Esri></metadata>

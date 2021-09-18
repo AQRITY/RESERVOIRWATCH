@@ -1,0 +1,11 @@
+"Value","Landuse"
+1,WATR
+2,FRST
+3,RNGE
+4,WETL
+5,AGRL
+6,RNGB
+7,URBN
+8,BARR
+9,WATR
+10,AGRL
