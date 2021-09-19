@@ -398,7 +398,7 @@ span.top {
 }
 
 .topin {
-  background-image: linear-gradient(to bottom, #00f1ef, #00a9f1);
+  background-image: linear-gradient(to bottom, #00f1e3, #05c02d);
   width: 10px;
   height: 40%;
   position: absolute;
@@ -407,7 +407,7 @@ span.top {
 }
 
 .bottomout {
-  background-image: linear-gradient(to bottom, #00f1ef, #00a9f1);
+  background-image: linear-gradient(to bottom, #f7daa7, #f6773f);
   width: 10px;
   height: 70%;
   position: absolute;
@@ -720,6 +720,7 @@ span.top {
 .single-skill {
   /*  width: 25%;
   margin-bottom: 80px;*/
+  position: relative;
 }
 
 .success-stroke {
@@ -1099,6 +1100,15 @@ input[type='date'] {
   background-image: linear-gradient(to top, #004370, #65cdfb);
 }
 
+.circleText {
+  position: absolute;
+  top: 64px;
+  left: 28px;
+  font-size: 14px;
+  color: #00a9f1;
+  font-weight: 600;
+}
+
 .datedayforcast {
   background-color: #004370;
   /* float: right; */
@@ -1124,7 +1134,7 @@ input[type='date'] {
 }
 .greenno-active {
   border: 1px solid #99cc33 !important;
-  color: #99cc33 !important;
+  color: #608612 !important;
 }
 
 .dateshow,

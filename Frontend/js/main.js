@@ -76,10 +76,92 @@ $(document).ready(function () {
 });
 
 function callForecast(reservoirsName) {
-  var a = $('#' + reservoirsName + ' input[name=predictedDays]:checked').val();
-  var b = $('#' + reservoirsName + ' input[name=predictedDate]').val();
+  var noOfDays = $(
+    '#' + reservoirsName + ' input[name=predictedDays]:checked'
+  ).val();
+  var selectedDate = $(
+    '#' + reservoirsName + ' input[name=predictedDate]'
+  ).val();
 
-  console.log(b, a);
+  console.log('selectedDate : ', selectedDate);
+  console.log('noOfDays : ', noOfDays);
+
+  var predictionMeanList = [];
+  var predictionStdList = [];
+  $.ajaxSetup({ async: false });
+
+  $.ajax({
+    type: 'GET',
+    url: './Reservoirs-Data/Hemavathi/predection_30_hema_mean.csv',
+    dataType: 'text',
+    success: function (csv) {
+      let lines = csv.split('\n');
+      let result = [];
+      for (let i = 1; i < lines.length; i++) {
+        let obj = {};
+        let currentline = lines[i].split(',');
+
+        result.push(currentline);
+      }
+      result.forEach((r) => {
+        if (r[0] === '03-01-20') {
+          ///// -------------------------------- date selected
+          predictionMeanList.push(r);
+        }
+      });
+      console.log(result);
+    },
+  });
+
+  $.ajax({
+    type: 'GET',
+    url: './Reservoirs-Data/Hemavathi/predection_30_hema_std.csv',
+    dataType: 'text',
+    success: function (csv) {
+      let lines = csv.split('\n');
+      let result = [];
+      for (let i = 1; i < lines.length; i++) {
+        let obj = {};
+        let currentline = lines[i].split(',');
+
+        result.push(currentline);
+      }
+
+      result.forEach((r) => {
+        if (r[0] === '03-01-20') {
+          ///// -------------------------------- date selected
+          predictionStdList.push(r);
+        }
+      });
+      console.log(result);
+    },
+  });
+  $.ajaxSetup({ async: true });
+
+  charArray = [];
+  var someDate = new Date('2020/01/03'); ///// -------------------------------- date selected
+  let n = noOfDays; ///// --------------------------------- n value  30days or 60days or 90 days
+  for (var i = 0; i < n; i++) {
+    var temp = new Date(someDate.setDate(someDate.getDate() + 1));
+    charArray.push([
+      temp,
+      [
+        parseFloat(predictionMeanList[0][i + 1]),
+        parseFloat(predictionStdList[0][i + 1]),
+      ],
+    ]);
+  }
+
+  console.log(charArray);
+
+  g3 = new Dygraph(
+    document.getElementById('hemavathi-levelgraphdiv'),
+    charArray,
+    {
+      labels: ['Date', 'Prediction Mean'],
+      errorBars: charArray,
+    }
+  );
 }
 
 $(document).ready(function () {
