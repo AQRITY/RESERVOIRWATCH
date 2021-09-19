@@ -26,6 +26,8 @@ Our interactive dashboard helps in dissemination of information regarding near-r
 
 ### Interactive Dashboard
 
--
--
-- 
+- The dashboard has two views - overview and dataview.
+- Time-series data related to historical and future predictions are shown.
+- Model comparison of predictions vs observed has been done for the year Jan 2020 to Dec 2020
+
+The RESERVOIRWATCH Dashboard can be accessed at [www.aqrity.com/reservoirwatch](http://reservoir-watch.aqrity.com/)
