@@ -1,13 +1,25 @@
+var reservoirDetails = [];
+
 $(window).load(function () {
+  $('.buttonsection ul.observed li').click(function () {
+    var varible = $(this).text();
+
+    if (['Storage'].includes(varible.trim())) {
+      localStorage.setItem('buttonClicked', 'storage');
+    }
+    if (['Inflow'].includes(varible.trim())) {
+      localStorage.setItem('buttonClicked', 'inflow');
+    }
+  });
   // executes when complete page is fully loaded, including all frames, objects and images
 });
 
 function callButtonGraph(river, type, button) {
   var riverFolder = '';
-  riverFolder = river == 'hemavathi' ? 'Hemavathi' : riverFolder;
-  riverFolder = river == 'harangi' ? 'Harangi' : riverFolder;
-  riverFolder = river == 'kabini' ? 'Kabini' : riverFolder;
-  riverFolder = river == 'krs' ? 'KRS' : riverFolder;
+  riverFolder = river == 'hemavathi' ? 'hemavathi' : riverFolder;
+  riverFolder = river == 'harangi' ? 'harangi' : riverFolder;
+  riverFolder = river == 'kabini' ? 'kabini' : riverFolder;
+  riverFolder = river == 'krs' ? 'krs' : riverFolder;
 
   var buttonType = '';
   buttonType = button == 'level' ? 'level.csv' : buttonType;
@@ -25,6 +37,28 @@ function callButtonGraph(river, type, button) {
   graphId = river == 'kabini' ? 58 : graphId;
   graphId = river == 'krs' ? 57 : graphId;
 
+  if (button == 'level') {
+    document.getElementById(river + '-unit').innerHTML = ' ft';
+  }
+  if (button == 'storage') {
+    document.getElementById(river + '-unit').innerHTML = ' TMC';
+  }
+  if (button == 'inflow') {
+    document.getElementById(river + '-unit').innerHTML = ' cumecs';
+  }
+  if (button == 'outflow') {
+    document.getElementById(river + '-unit').innerHTML = ' cumecs';
+  }
+  if (button == 'rainfall') {
+    document.getElementById(river + '-unit').innerHTML = ' mm/day';
+  }
+  if (button == 'soilmoisture') {
+    document.getElementById(river + '-unit').innerHTML = ' mm/day';
+  }
+  if (button == 'evapotranspiration') {
+    document.getElementById(river + '-unit').innerHTML = ' mm/day';
+  }
+
   g3 = new Dygraph(
     document.getElementById(river + '-levelgraphdiv'),
     'Reservoirs-Data/' + riverFolder + '/' + buttonType,
@@ -39,7 +73,7 @@ $(document).ready(function () {
 
   $('.buttonsection ul.observed li').click(function () {
     var varible = $(this).text();
-    console.log($(this), '--this');
+    // console.log($(this), '--this');
 
     if (['Storage', 'Inflow'].includes(varible.trim())) {
       $('.buttonsection ul li').removeClass('buttonactive');
@@ -54,7 +88,7 @@ $(document).ready(function () {
     //   $('.buttonsection ul li').removeClass('buttonactive');
     //   $(this).addClass('buttonactive');
 
-    console.log(varible + ' function called');
+    // console.log(varible + ' function called');
     if (['Storage', 'Inflow'].includes(varible.trim())) {
       $('.extrasectionforinflow').css('display', 'flex');
     } else {
@@ -75,16 +109,64 @@ $(document).ready(function () {
   });
 });
 
+function formatDate(input) {
+  var datePart = input.match(/\d+/g),
+    year = datePart[0].substring(2), // get only two digits
+    month = datePart[1],
+    day = datePart[2];
+
+  return day + '-' + month + '-' + year;
+}
+
 function callForecast(reservoirsName) {
   var noOfDays = $(
     '#' + reservoirsName + ' input[name=predictedDays]:checked'
   ).val();
-  var selectedDate = $(
-    '#' + reservoirsName + ' input[name=predictedDate]'
-  ).val();
+  var selectedDate = formatDate(
+    $('#' + reservoirsName + ' input[name=predictedDate]').val()
+  );
+  var buttonClicked = localStorage.getItem('buttonClicked');
 
   console.log('selectedDate : ', selectedDate);
   console.log('noOfDays : ', noOfDays);
+  console.log('button : ', buttonClicked);
+  console.log('reservoir : ', reservoirsName);
+
+  if (buttonClicked == 'storage') {
+    document.getElementById(reservoirsName + '-unit').innerHTML = ' TMC';
+  }
+  if (buttonClicked == 'inflow') {
+    document.getElementById(reservoirsName + '-unit').innerHTML = ' cumecs';
+  }
+
+  console.log(
+    'url : ',
+    './Reservoirs-Data/' +
+      reservoirsName +
+      '/' +
+      buttonClicked +
+      '_' +
+      noOfDays +
+      '/' +
+      buttonClicked +
+      '_prediction_' +
+      noOfDays +
+      '_' +
+      reservoirsName
+  );
+  if (!selectedDate) {
+    alert(
+      'ENTER DATE BETWEEN 1-JAN-2020 to 17-NOV-2020 TO CHECK QUALITY OF PREDICTION'
+    );
+    return false;
+  }
+
+  if (noOfDays === undefined) {
+    alert(
+      'PLEASE PICK NUMBER OF PREDICTION DAYS eg: 30 days , 60 days or 90 days'
+    );
+    return false;
+  }
 
   var predictionMeanList = [];
   var predictionStdList = [];
@@ -92,7 +174,20 @@ function callForecast(reservoirsName) {
 
   $.ajax({
     type: 'GET',
-    url: './Reservoirs-Data/Hemavathi/predection_30_hema_mean.csv',
+    url:
+      './Reservoirs-Data/' +
+      reservoirsName +
+      '/' +
+      buttonClicked +
+      '_' +
+      noOfDays +
+      '/' +
+      buttonClicked +
+      '_prediction_' +
+      noOfDays +
+      '_' +
+      reservoirsName +
+      '_mean.csv',
     dataType: 'text',
     success: function (csv) {
       let lines = csv.split('\n');
@@ -104,18 +199,31 @@ function callForecast(reservoirsName) {
         result.push(currentline);
       }
       result.forEach((r) => {
-        if (r[0] === '03-01-20') {
+        if (r[0] === selectedDate) {
           ///// -------------------------------- date selected
           predictionMeanList.push(r);
         }
       });
-      console.log(result);
+      console.log(predictionMeanList);
     },
   });
 
   $.ajax({
     type: 'GET',
-    url: './Reservoirs-Data/Hemavathi/predection_30_hema_std.csv',
+    url:
+      './Reservoirs-Data/' +
+      reservoirsName +
+      '/' +
+      buttonClicked +
+      '_' +
+      noOfDays +
+      '/' +
+      buttonClicked +
+      '_prediction_' +
+      noOfDays +
+      '_' +
+      reservoirsName +
+      '_std.csv',
     dataType: 'text',
     success: function (csv) {
       let lines = csv.split('\n');
@@ -128,20 +236,70 @@ function callForecast(reservoirsName) {
       }
 
       result.forEach((r) => {
-        if (r[0] === '03-01-20') {
+        if (r[0] === selectedDate) {
           ///// -------------------------------- date selected
           predictionStdList.push(r);
         }
       });
-      console.log(result);
+      console.log(predictionStdList);
     },
   });
-  $.ajaxSetup({ async: true });
+
+  $.ajax({
+    type: 'GET',
+    url:
+      './Reservoirs-Data/' +
+      reservoirsName +
+      '/' +
+      buttonClicked +
+      '_' +
+      noOfDays +
+      '/' +
+      buttonClicked +
+      '_prediction_' +
+      noOfDays +
+      '_' +
+      reservoirsName +
+      '_stat.csv',
+    dataType: 'text',
+    success: function (csv) {
+      let lines = csv.split('\n');
+      let result = [];
+      for (let i = 1; i < lines.length; i++) {
+        let obj = {};
+        let currentline = lines[i].split(',');
+
+        result.push(currentline);
+      }
+      result.forEach((r) => {
+        if (r[0] === selectedDate) {
+          ///// -------------------------------- date selected
+          console.log(r);
+          if (r.length) {
+            document.getElementById(reservoirsName + '-stat-r2').innerHTML =
+              r[2];
+            document.getElementById(reservoirsName + '-stat-RMSE').innerHTML =
+              r[1];
+          } else {
+            document.getElementById(
+              reservoirsName + '-stat-r2'
+            ).innerHTML = 0.0;
+            document.getElementById(
+              reservoirsName + '-stat-RMSE'
+            ).innerHTML = 0.0;
+          }
+        }
+      });
+    },
+  });
 
   charArray = [];
-  var someDate = new Date('2020/01/03'); ///// -------------------------------- date selected
+  var someDate = new Date(selectedDate); ///// -------------------------------- date selected
+  $.ajaxSetup({ async: true });
+
   let n = noOfDays; ///// --------------------------------- n value  30days or 60days or 90 days
   for (var i = 0; i < n; i++) {
+    console.log(temp);
     var temp = new Date(someDate.setDate(someDate.getDate() + 1));
     charArray.push([
       temp,
@@ -155,7 +313,7 @@ function callForecast(reservoirsName) {
   console.log(charArray);
 
   g3 = new Dygraph(
-    document.getElementById('hemavathi-levelgraphdiv'),
+    document.getElementById(reservoirsName + '-levelgraphdiv'),
     charArray,
     {
       labels: ['Date', 'Prediction Mean'],
@@ -164,11 +322,20 @@ function callForecast(reservoirsName) {
   );
 }
 
-$(document).ready(function () {
-  $('.datedayforcast').click(function () {
-    console.log('forecast called');
-  });
-});
+// $(document).ready(function () {
+//   $('.datedayforcast').click(function () {
+//     var noOfDays = $(
+//       '#' + reservoirsName + ' input[name=predictedDays]:checked'
+//     ).val();
+//     var selectedDate = $(
+//       '#' + reservoirsName + ' input[name=predictedDate]'
+//     ).val();
+
+//     console.log(noOfDays);
+//     console.log(selectedDate);
+//     console.log('forecast called');
+//   });
+// });
 
 //onclick function
 $(document).ready(function () {
@@ -195,18 +362,60 @@ $(document).ready(function () {
     $('.' + varible).show();
     $('.body_starts').hide();
     if (varible == 56) {
-      graphPath = 'Reservoirs-Data/Harangi/level.csv';
+      graphPath = 'Reservoirs-Data/harangi/level.csv';
       graphId = 'harangi';
     } else if (varible == 57) {
-      graphPath = 'Reservoirs-Data/KRS/level.csv';
+      graphPath = 'Reservoirs-Data/krs/level.csv';
       graphId = 'krs';
     } else if (varible == 58) {
-      graphPath = 'Reservoirs-Data/Kabini/level.csv';
+      graphPath = 'Reservoirs-Data/kabini/level.csv';
       graphId = 'kabini';
     } else if (varible == 55) {
-      graphPath = 'Reservoirs-Data/Hemavathi/level.csv';
+      graphPath = 'Reservoirs-Data/hemavathi/level.csv';
       graphId = 'hemavathi';
     }
+
+    $.ajaxSetup({ async: false });
+    $.ajax({
+      type: 'GET',
+      url: './Reservoirs-Data/' + graphId + '.csv',
+      dataType: 'text',
+      success: function (csv) {
+        var lines = csv.split('\n');
+
+        var result = [];
+
+        var headers = lines[0].split(',');
+
+        for (var i = 1; i < lines.length; i++) {
+          var obj = {};
+          var currentline = lines[i].split(',');
+
+          for (var j = 0; j < headers.length; j++) {
+            obj[headers[j]] = currentline[j];
+          }
+
+          result.push(obj);
+        }
+
+        console.log(result);
+
+        result.forEach((r) => {
+          if (r.date == '12/16/2020') {
+            reservoirDetails.push(r);
+          }
+        });
+        console.log('reservoirDetails', reservoirDetails[0]['reservoir level']);
+        console.log('reservoirDetails', reservoirDetails[0]['observed inflow']);
+        console.log(
+          'reservoirDetails',
+          reservoirDetails[0]['observed outflow']
+        );
+        console.log('reservoirDetails', reservoirDetails[0]['storage']);
+      },
+    });
+    $.ajaxSetup({ async: true });
+
     g3 = new Dygraph(
       document.getElementById(graphId + '-levelgraphdiv'),
       graphPath,

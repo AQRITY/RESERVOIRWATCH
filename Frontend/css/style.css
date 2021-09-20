@@ -36,6 +36,53 @@ body {
   height: 0;
 }
 
+.slider1 {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider1:before {
+  position: absolute;
+  content: '';
+  height: 25px;
+  width: 25px;
+  left: 0px;
+  bottom: -5px;
+  background-color: #2083d4;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.switch input:checked + .slider1 {
+  background-color: #2196f3;
+}
+
+.switch input:focus + .slider1 {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+.switch input:checked + .slider1:before {
+  -webkit-transform: translateX(15px);
+  -ms-transform: translateX(15px);
+  transform: translateX(15px);
+}
+
+/* Rounded sliders */
+.slider1.round {
+  border-radius: 34px;
+}
+
+.slider1.round:before {
+  border-radius: 50%;
+}
+
 .slider {
   position: absolute;
   cursor: pointer;
@@ -55,7 +102,7 @@ body {
   width: 25px;
   left: 0px;
   bottom: -5px;
-  background-color: #0371aa;
+  background-color: #959595;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
@@ -124,6 +171,14 @@ body {
 .open li a {
   /*    display: */
 }
+
+#word2,
+#word3,
+#word4,
+#word5 {
+  color: #959595;
+}
+
 #word,
 #word1,
 #word2,
@@ -132,6 +187,7 @@ body {
 #word5 {
   display: none;
 }
+
 .headone {
   width: 75%;
 }
@@ -648,7 +704,7 @@ span.top {
 .circle-chart__info {
   animation: circle-chart-appear 2s forwards;
   opacity: 0;
-  transform: translateY(0.3em);
+  transform: translateY(-3px);
 }
 
 .circle-chart__percent {
@@ -1100,13 +1156,25 @@ input[type='date'] {
   background-image: linear-gradient(to top, #004370, #65cdfb);
 }
 
+.unitText {
+  float: right;
+  margin-right: 55px;
+  font-weight: 600;
+  color: #00a9f1;
+}
+
 .circleText {
   position: absolute;
-  top: 64px;
-  left: 28px;
+  top: 62px;
+  text-align: center;
+  justify-content: center;
+  align-self: center;
+  text-anchor: middle;
+  left: 0;
+  right: 0;
   font-size: 14px;
   color: #00a9f1;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .datedayforcast {
