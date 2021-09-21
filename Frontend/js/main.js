@@ -11,8 +11,112 @@ $(window).load(function () {
       localStorage.setItem('buttonClicked', 'inflow');
     }
   });
+  $('.buttonsection ul.forecast li').click(function () {
+    var varible = $(this).text();
+
+    if (['Storage'].includes(varible.trim())) {
+      localStorage.setItem('buttonClicked', 'storage');
+    }
+    if (['Inflow'].includes(varible.trim())) {
+      localStorage.setItem('buttonClicked', 'inflow');
+    }
+  });
   // executes when complete page is fully loaded, including all frames, objects and images
 });
+
+function callGraph(river, type, button) {
+  var riverFolder = '';
+  riverFolder = river == 'hemavathi' ? 'hemavathi' : riverFolder;
+  riverFolder = river == 'harangi' ? 'harangi' : riverFolder;
+  riverFolder = river == 'kabini' ? 'kabini' : riverFolder;
+  riverFolder = river == 'krs' ? 'krs' : riverFolder;
+
+  // var buttonType = '';
+  // buttonType = button == 'storage' ? type + '_storage.csv' : buttonType;
+  // buttonType = button == 'inflow' ? type + '_inflow.csv' : buttonType;
+
+  // var graphId = 0;
+  // graphId = river == 'hemavathi' ? 55 : graphId;
+  // graphId = river == 'harangi' ? 56 : graphId;
+  // graphId = river == 'kabini' ? 58 : graphId;
+  // graphId = river == 'krs' ? 57 : graphId;
+
+  if (button == 'storage') {
+    document.getElementById(river + '-unit').innerHTML = ' TMC';
+  }
+  if (button == 'inflow') {
+    document.getElementById(river + '-unit').innerHTML = ' cumecs';
+  }
+
+  var noOfDays = $('#' + river + ' input[name=predictedDays]:checked').val();
+
+  console.log('noOfDays', noOfDays);
+  let n = 90;
+
+  $.ajaxSetup({ async: false });
+  var annotationVal = [];
+  $.ajax({
+    type: 'GET',
+    url:
+      'Reservoirs-Data/' +
+      riverFolder +
+      '/' +
+      river +
+      '_' +
+      button +
+      '_future_' +
+      n +
+      '.csv',
+    dataType: 'text',
+    success: function (csv) {
+      let lines = csv.split('\n');
+      let result = [];
+      for (let i = 1; i < lines.length; i++) {
+        let obj = {};
+        let currentline = lines[i].split(',');
+        result.push(currentline);
+      }
+
+      result.forEach((r) => {
+        if (r[2] != 0) {
+          annotationVal.push(r[0]);
+          return;
+        }
+      });
+    },
+  });
+  $.ajaxSetup({ async: true });
+  g3 = new Dygraph(
+    document.getElementById(river + '-levelgraphdiv'),
+    'Reservoirs-Data/' +
+      riverFolder +
+      '/' +
+      river +
+      '_' +
+      button +
+      '_future_' +
+      n +
+      '.csv',
+    {
+      strokeWidth: 2.0,
+      color: 'rgb(0,171,241)',
+      rollPeriod: 1,
+      errorBars: true,
+    }
+  );
+  console.log('annotationVal', annotationVal[0]);
+
+  g3.ready(function () {
+    g3.setAnnotations([
+      {
+        series: 'Storage',
+        x: annotationVal[0],
+        shortText: 'F',
+        text: 'Future Prediction',
+      },
+    ]);
+  });
+}
 
 function callButtonGraph(river, type, button) {
   var riverFolder = '';
@@ -39,30 +143,39 @@ function callButtonGraph(river, type, button) {
 
   if (button == 'level') {
     document.getElementById(river + '-unit').innerHTML = ' ft';
+    document.getElementById(river + '-levelgraphdiv').innerHTML = '';
   }
   if (button == 'storage') {
     document.getElementById(river + '-unit').innerHTML = ' TMC';
+    document.getElementById(river + '-levelgraphdiv').innerHTML = '';
   }
   if (button == 'inflow') {
     document.getElementById(river + '-unit').innerHTML = ' cumecs';
+    document.getElementById(river + '-levelgraphdiv').innerHTML = '';
   }
   if (button == 'outflow') {
     document.getElementById(river + '-unit').innerHTML = ' cumecs';
+    document.getElementById(river + '-levelgraphdiv').innerHTML = '';
   }
   if (button == 'rainfall') {
     document.getElementById(river + '-unit').innerHTML = ' mm/day';
+    document.getElementById(river + '-levelgraphdiv').innerHTML = '';
   }
   if (button == 'soilmoisture') {
     document.getElementById(river + '-unit').innerHTML = ' mm/day';
+    document.getElementById(river + '-levelgraphdiv').innerHTML = '';
   }
   if (button == 'evapotranspiration') {
     document.getElementById(river + '-unit').innerHTML = ' mm/day';
+    document.getElementById(river + '-levelgraphdiv').innerHTML = '';
   }
 
   g3 = new Dygraph(
     document.getElementById(river + '-levelgraphdiv'),
     'Reservoirs-Data/' + riverFolder + '/' + buttonType,
     {
+      strokeWidth: 2.0,
+      color: 'rgb(0,171,241)',
       rollPeriod: 1,
     }
   );
@@ -71,9 +184,9 @@ function callButtonGraph(river, type, button) {
 $(document).ready(function () {
   $('.extrasectionforinflow').css('display', 'none');
 
+  $('.extrasectionforforecast').css('display', 'none');
   $('.buttonsection ul.observed li').click(function () {
     var varible = $(this).text();
-    // console.log($(this), '--this');
 
     if (['Storage', 'Inflow'].includes(varible.trim())) {
       $('.buttonsection ul li').removeClass('buttonactive');
@@ -85,11 +198,34 @@ $(document).ready(function () {
       $(this).addClass('buttonactive');
     }
 
+    if (['Storage', 'Inflow'].includes(varible.trim())) {
+      $('.extrasectionforinflow').css('display', 'none');
+      $('.extrasectionforforecast').css('display', 'flex');
+    } else {
+      $('.extrasectionforforecast').css('display', 'none');
+    }
+  });
+
+  $('.buttonsection ul.forecast li').click(function () {
+    var varible = $(this).text();
+    // console.log($(this), '--this');
+
+    // if (['Storage', 'Inflow'].includes(varible.trim())) {
+    //   $('.buttonsection ul li').removeClass('buttonactive');
+    //   $('.buttonsection ul li').removeClass('greenactive');
+    //   $(this).addClass('greenactive');
+    // } else {
+    //   $('.buttonsection ul li').removeClass('greenactive');
     //   $('.buttonsection ul li').removeClass('buttonactive');
     //   $(this).addClass('buttonactive');
+    // }
+
+    $('.buttonsection ul li').removeClass('buttonactive');
+    $(this).addClass('buttonactive');
 
     // console.log(varible + ' function called');
     if (['Storage', 'Inflow'].includes(varible.trim())) {
+      $('.extrasectionforforecast').css('display', 'none');
       $('.extrasectionforinflow').css('display', 'flex');
     } else {
       $('.extrasectionforinflow').css('display', 'none');
@@ -115,7 +251,7 @@ function formatDate(input) {
     month = datePart[1],
     day = datePart[2];
 
-  return day + '-' + month + '-' + year;
+  return month + '-' + day + '-' + year;
 }
 
 function callForecast(reservoirsName) {
@@ -316,6 +452,8 @@ function callForecast(reservoirsName) {
     document.getElementById(reservoirsName + '-levelgraphdiv'),
     charArray,
     {
+      strokeWidth: 2.0,
+      color: 'rgb(0,171,241)',
       labels: ['Date', 'Prediction Mean'],
       errorBars: charArray,
     }
@@ -375,51 +513,55 @@ $(document).ready(function () {
       graphId = 'hemavathi';
     }
 
-    $.ajaxSetup({ async: false });
-    $.ajax({
-      type: 'GET',
-      url: './Reservoirs-Data/' + graphId + '.csv',
-      dataType: 'text',
-      success: function (csv) {
-        var lines = csv.split('\n');
+    // $.ajaxSetup({ async: false });
+    // $.ajax({
+    //   type: 'GET',
+    //   url: './Reservoirs-Data/' + graphId + '.csv',
+    //   dataType: 'text',
+    //   success: function (csv) {
+    //     var lines = csv.split('\n');
 
-        var result = [];
+    //     var result = [];
 
-        var headers = lines[0].split(',');
+    //     var headers = lines[0].split(',');
 
-        for (var i = 1; i < lines.length; i++) {
-          var obj = {};
-          var currentline = lines[i].split(',');
+    //     for (var i = 1; i < lines.length; i++) {
+    //       var obj = {};
+    //       var currentline = lines[i].split(',');
 
-          for (var j = 0; j < headers.length; j++) {
-            obj[headers[j]] = currentline[j];
-          }
+    //       for (var j = 0; j < headers.length; j++) {
+    //         obj[headers[j]] = currentline[j];
+    //       }
 
-          result.push(obj);
-        }
+    //       result.push(obj);
+    //     }
 
-        console.log(result);
+    //     console.log(result);
 
-        result.forEach((r) => {
-          if (r.date == '12/16/2020') {
-            reservoirDetails.push(r);
-          }
-        });
-        console.log('reservoirDetails', reservoirDetails[0]['reservoir level']);
-        console.log('reservoirDetails', reservoirDetails[0]['observed inflow']);
-        console.log(
-          'reservoirDetails',
-          reservoirDetails[0]['observed outflow']
-        );
-        console.log('reservoirDetails', reservoirDetails[0]['storage']);
-      },
-    });
-    $.ajaxSetup({ async: true });
+    //     result.forEach((r) => {
+    //       if (r.date == '12/16/2020') {
+    //         reservoirDetails.push(r);
+    //       }
+    //     });
+    //     console.log('reservoirDetails', reservoirDetails[0]['reservoir level']);
+    //     console.log('reservoirDetails', reservoirDetails[0]['observed inflow']);
+    //     console.log(
+    //       'reservoirDetails',
+    //       reservoirDetails[0]['observed outflow']
+    //     );
+    //     console.log('reservoirDetails', reservoirDetails[0]['storage']);
+    //   },
+    // });
+    // $.ajaxSetup({ async: true });
+
+    console.log(graphPath);
 
     g3 = new Dygraph(
       document.getElementById(graphId + '-levelgraphdiv'),
       graphPath,
       {
+        strokeWidth: 2.0,
+        color: 'rgb(0,171,241)',
         rollPeriod: 1,
       }
     );

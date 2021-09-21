@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Home</title>
+    <title>RESERVOIR WATCH</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -20,6 +20,30 @@
 
     <script type="text/javascript" src="dygraph.js"></script>
     <link rel="stylesheet" src="dygraph.css" />
+    <style>
+        .dygraph-legend {
+            margin-left: 30% !important;
+
+        }
+
+        .dygraph-annotation {
+            position: absolute;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        /* This class only applies to annotations without icons */
+        /* Old class name: .dygraphDefaultAnnotation */
+        .dygraph-default-annotation {
+            border: 1px solid black;
+            background-color: white;
+            text-align: center;
+        }
+
+        .dygraph-annotation .dygraphDefaultAnnotation .dygraph-default-annotation {
+            position: absolute !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -481,7 +505,7 @@
                                                 <circle class="circle-chart__circle success-stroke"
                                                     stroke-dasharray="92,100" cx="16.9" cy="16.9" r="15.9"></circle>
                                                 <g class="circle-chart__info"> <text class="circle-chart__percent"
-                                                        x="17.9" y="15.5">11.66789</text><text
+                                                        x="17.9" y="15.5">11.66</text><text
                                                         class="circle-chart__subline" x="16.91549431" y="22">
 
                                                     </text> </g>
@@ -521,7 +545,7 @@
                                                 <circle class="circle-chart__circle success-stroke"
                                                     stroke-dasharray="92,100" cx="16.9" cy="16.9" r="15.9"></circle>
                                                 <g class="circle-chart__info"> <text class="circle-chart__percent"
-                                                        x="17.9" y="15.5">114.4128</text><text
+                                                        x="17.9" y="15.5">114.41</text><text
                                                         class="circle-chart__subline" x="16.91549431" y="22">
 
                                                     </text> </g>
@@ -533,30 +557,32 @@
                         </div>
                         <div class="contentshow">
                             <div class="heading">
-                                Hemavathi Reservoir
+                                Hemavathi Dam
                             </div>
                             <div class="contentforriver">
 
-                                <p><span class="labelgray"> River : </span> <span class="resultshow">Kaveri </span></p>
-                                <p><span class="labelgray"> Location : </span> <span class="resultshow"> Hudgur,
-                                        Somawarapete taluk, Kodagu</span></p>
-                                <p><span class="labelgray"> Storage Capacity : </span> <span class="resultshow"> 8.07
-                                        TMCft</span></p>
-                                <p><span class="labelgray"> Reservoir Level : </span> <span class="resultshow"> 871.42
-                                        m</span></p>
-                                <p><span class="labelgray"> Height : </span> <span class="resultshow"> 53 m</span></p>
-                                <p><span class="labelgray"> Length : </span> <span class="resultshow">845.8 </span></p>
-                                <p><span class="labelgray"> No. of Gate : </span> <span class="resultshow"> 4</span></p>
-                                <p><span class="labelgray"> Reservoir Level : </span> <span class="resultshow"> 871.42
-                                        m</span></p>
-                                <p><span class="labelgray"> Type : </span> <span class="resultshow"> Earth-fill, Gravity
-                                        & Masonry dam</span></p>
-                                <p><span class="labelgray"> Reservoir Area : </span> <span class="resultshow"> 19.081
+                                <p><span class="labelgray"> River : </span> <span class="resultshow">Hemavathy River, a
+                                        tributary of Cauvery River </span></p>
+                                <p><span class="labelgray"> Location : </span> <span class="resultshow">Gorur Village,
+                                        Hassan</span></p>
+                                <p><span class="labelgray"> Gross Storage Capacity : </span> <span class="resultshow">
+                                        37 TMC</span></p>
+                                <p><span class="labelgray"> Full Reservoir Level : </span> <span class="resultshow">
+                                        2922 ft</span></p>
+                                <p><span class="labelgray"> Height of dam above river bed level : </span> <span
+                                        class="resultshow"> 146 ft</span></p>
+                                <p><span class="labelgray"> Length : </span> <span class="resultshow">15394 ft </span>
+                                </p>
+                                <p><span class="labelgray"> Number of gates : </span> <span class="resultshow"> 6</span>
+                                </p>
+                                <p><span class="labelgray"> Type : </span> <span class="resultshow"> Masonry Dam with
+                                        Central Spillway and earthen flanks on either banks</span></p>
+                                <p><span class="labelgray"> Catchment Area : </span> <span class="resultshow"> 2810
                                         km²</span></p>
                                 <p><span class="labelgray"> Completed Year : </span> <span class="resultshow">
-                                        1982</span></p>
-                                <p><span class="labelgray"> Purpose : </span> <span class="resultshow"> Irrigation &
-                                        Hydroelectric</span></p>
+                                        1979</span></p>
+                                <p><span class="labelgray"> Purpose : </span> <span class="resultshow"> Water for
+                                        drinking and irrigation</span></p>
                             </div>
 
                         </div>
@@ -568,9 +594,11 @@
                                 <ul class="observed">
                                     <li class="" onclick="callButtonGraph('hemavathi','observed','level')"><a
                                             href="#"></a> Level</li>
-                                    <li class="greenno-active"><a href="#"></a>
+                                    <li class="greenno-active" onclick="callGraph('hemavathi','observed','storage')"><a
+                                            href="#"></a>
                                         Storage</li>
-                                    <li class="greenno-active"><a href="#"></a>
+                                    <li class="greenno-active" onclick="callGraph('hemavathi','observed','inflow')"><a
+                                            href="#"></a>
                                         Inflow</li>
                                     <li onclick="callButtonGraph('hemavathi','observed','outflow')"><a href="#"></a>
                                         Outflow</li>
@@ -593,7 +621,54 @@
                                     </ul>
                                 </div>
 
+                                <div>
+                                    <span class="labelgray"> Forecast Evaluation :</span>
+                                    <ul class="forecast">
+                                        <li onclick="callForecast('hemavathi')"><a href="#"></a>
+                                            Inflow</li>
+
+                                        <li onclick="callForecast('hemavathi')"><a href="#"></a> Storage</li>
+
+                                    </ul>
+                                </div>
+
                             </div>
+
+                            <div class="extrasectionforforecast">
+                                <div class="forcast" id="hemavathi">
+                                    <div class="rowone">
+                                        <div class="headingcast">
+                                            PREDICTION MODEL
+                                        </div>
+                                        <!-- <div class="dateshow">
+                                            <p> Date : <input type="date" min='2020-01-01' max='2020-11-12'
+                                                    name="predictedDate" /></p>
+                                        </div> -->
+                                    </div>
+                                    <div class="rowtwo">
+                                        <div class="dayshow">
+                                            <p> Day : <input type="radio" name="predictedDays" value="30" /> 30 <input
+                                                    type="radio" name="predictedDays" value="60" /> 60<input
+                                                    type="radio" name="predictedDays" value="90" /> 90</p>
+                                        </div>
+                                        <div class="datedayforcast1" onclick="callForecast('hemavathi')">
+                                            FORECAST
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!-- <div class="metrics">
+                                    <p class="text-left"> PERFORMANCE EVALUATION METRICS </p>
+                                    <p>Coefficient of Determination (R²) :
+                                        <span id="hemavathi-stat-r2"></span>
+                                    </p>
+                                    <p>Root Mean Square Error (RMSE) :
+                                        <span id="hemavathi-stat-RMSE"></span>
+                                    </p>
+                                </div> -->
+                            </div>
+
                             <div class="extrasectionforinflow">
                                 <div class="forcast" id="hemavathi">
                                     <div class="rowone">
@@ -762,25 +837,28 @@
                         </div>
                         <div class="contentshow">
                             <div class="heading">
-                                Harangi Reservoir
+                                Harangi Dam
                             </div>
                             <div class="contentforriver">
 
-                                <p><span class="labelgray"> River : </span> <span class="resultshow">Kaveri </span></p>
-                                <p><span class="labelgray"> Location : </span> <span class="resultshow"> Hudgur,
-                                        Somawarapete taluk, Kodagu</span></p>
-                                <p><span class="labelgray"> Storage Capacity : </span> <span class="resultshow"> 8.07
-                                        TMCft</span></p>
-                                <p><span class="labelgray"> Reservoir Level : </span> <span class="resultshow"> 871.42
-                                        m</span></p>
-                                <p><span class="labelgray"> Height : </span> <span class="resultshow"> 53 m</span></p>
-                                <p><span class="labelgray"> Length : </span> <span class="resultshow">845.8 </span></p>
-                                <p><span class="labelgray"> No. of Gate : </span> <span class="resultshow"> 4</span></p>
-                                <p><span class="labelgray"> Reservoir Level : </span> <span class="resultshow"> 871.42
-                                        m</span></p>
+                                <p><span class="labelgray"> River : </span> <span class="resultshow">Harangi River, a
+                                        tributary of Cauvery River </span></p>
+                                <p><span class="labelgray"> Location : </span> <span class="resultshow"> near Hudgur
+                                        village, Somwarpet taluk in Kodagu district</span></p>
+                                <p><span class="labelgray"> Gross Storage Capacity : </span> <span class="resultshow">
+                                        8.5 TMC</span></p>
+                                <p><span class="labelgray"> Full Reservoir Level : </span> <span class="resultshow">
+                                        2859 ft</span></p>
+                                <p><span class="labelgray"> Height of dam above river bed level : </span> <span
+                                        class="resultshow"> 164 ft</span></p>
+                                <p><span class="labelgray"> Length : </span> <span class="resultshow"> 2775 ft</span>
+                                </p>
+                                <p><span class="labelgray"> Number of gates : </span> <span class="resultshow"> 4</span>
+                                </p>
+
                                 <p><span class="labelgray"> Type : </span> <span class="resultshow"> Earth-fill, Gravity
                                         & Masonry dam</span></p>
-                                <p><span class="labelgray"> Reservoir Area : </span> <span class="resultshow"> 19.081
+                                <p><span class="labelgray"> Catchment Area : </span> <span class="resultshow"> 420
                                         km²</span></p>
                                 <p><span class="labelgray"> Completed Year : </span> <span class="resultshow">
                                         1982</span></p>
@@ -818,6 +896,17 @@
                                                 href="#"></a> Soil Moisture</li>
                                         <li onclick="callButtonGraph('harangi','simulated','evapotranspiration')"><a
                                                 href="#"></a> Evapotranspiration</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <span class="labelgray"> Forecast Evaluation :</span>
+                                    <ul class="simulated">
+                                        <li onclick="callButtonGraph('harangi','simulated','inflow')"><a href="#"></a>
+                                            Inflow</li>
+
+                                        <li onclick="callButtonGraph('harangi','simulated','storage')"><a href="#"></a>
+                                            Storage</li>
+
                                     </ul>
                                 </div>
 
@@ -987,30 +1076,32 @@
                         </div>
                         <div class="contentshow">
                             <div class="heading">
-                                Krishna Raja Sagara
+                                KRS Dam
                             </div>
                             <div class="contentforriver">
 
-                                <p><span class="labelgray"> River : </span> <span class="resultshow">Kaveri </span></p>
-                                <p><span class="labelgray"> Location : </span> <span class="resultshow"> Hudgur,
-                                        Somawarapete taluk, Kodagu</span></p>
-                                <p><span class="labelgray"> Storage Capacity : </span> <span class="resultshow"> 8.07
-                                        TMCft</span></p>
-                                <p><span class="labelgray"> Reservoir Level : </span> <span class="resultshow"> 871.42
-                                        m</span></p>
-                                <p><span class="labelgray"> Height : </span> <span class="resultshow"> 53 m</span></p>
-                                <p><span class="labelgray"> Length : </span> <span class="resultshow">845.8 </span></p>
-                                <p><span class="labelgray"> No. of Gate : </span> <span class="resultshow"> 4</span></p>
-                                <p><span class="labelgray"> Reservoir Level : </span> <span class="resultshow"> 871.42
-                                        m</span></p>
-                                <p><span class="labelgray"> Type : </span> <span class="resultshow"> Earth-fill, Gravity
-                                        & Masonry dam</span></p>
-                                <p><span class="labelgray"> Reservoir Area : </span> <span class="resultshow"> 19.081
+                                <p><span class="labelgray"> River : </span> <span class="resultshow">Cauvery River
+                                    </span></p>
+                                <p><span class="labelgray"> Location : </span> <span class="resultshow"> Mandya
+                                        District, Srirangapatna Taluk</span></p>
+                                <p><span class="labelgray"> Gross Storage Capacity : </span> <span class="resultshow">
+                                        49.45 TMC</span></p>
+                                <p><span class="labelgray"> Full Reservoir Level : </span> <span class="resultshow">
+                                        124.8 ft</span></p>
+                                <p><span class="labelgray"> Height of dam above river bed level : </span> <span
+                                        class="resultshow"> 130.8 ft</span></p>
+                                <p><span class="labelgray"> Length : </span> <span class="resultshow">8597 ft </span>
+                                </p>
+                                <p><span class="labelgray"> Number of gates : </span> <span class="resultshow">
+                                        18</span></p>
+                                <p><span class="labelgray"> Type : </span> <span class="resultshow"> Gravity & Masonry
+                                        dam</span></p>
+                                <p><span class="labelgray"> Catchment Area : </span> <span class="resultshow"> 10619
                                         km²</span></p>
-                                <p><span class="labelgray"> Completed Year : </span> <span class="resultshow">
-                                        1982</span></p>
-                                <p><span class="labelgray"> Purpose : </span> <span class="resultshow"> Irrigation &
-                                        Hydroelectric</span></p>
+                                <p><span class="labelgray"> Completed Year : </span> <span
+                                        class="resultshow">1932</span></p>
+                                <p><span class="labelgray"> Purpose : </span> <span class="resultshow"> Irrigation,
+                                        drinking water and hydroelectric</span></p>
                             </div>
 
                         </div>
@@ -1040,6 +1131,17 @@
                                             Soil Moisture</li>
                                         <li onclick="callButtonGraph('krs','simulated','evapotranspiration')"><a
                                                 href="#"></a> Evapotranspiration</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <span class="labelgray"> Forecast Evaluation :</span>
+                                    <ul class="simulated">
+                                        <li onclick="callButtonGraph('krs','simulated','inflow')"><a href="#"></a>
+                                            Inflow</li>
+
+                                        <li onclick="callButtonGraph('krs','simulated','storage')"><a href="#"></a>
+                                            Storage</li>
+
                                     </ul>
                                 </div>
 
@@ -1209,30 +1311,33 @@
                         </div>
                         <div class="contentshow">
                             <div class="heading">
-                                Kabini Reservoir
+                                Kabini Dam
                             </div>
                             <div class="contentforriver">
 
-                                <p><span class="labelgray"> River : </span> <span class="resultshow">Kaveri </span></p>
-                                <p><span class="labelgray"> Location : </span> <span class="resultshow"> Hudgur,
-                                        Somawarapete taluk, Kodagu</span></p>
-                                <p><span class="labelgray"> Storage Capacity : </span> <span class="resultshow"> 8.07
-                                        TMCft</span></p>
-                                <p><span class="labelgray"> Reservoir Level : </span> <span class="resultshow"> 871.42
-                                        m</span></p>
-                                <p><span class="labelgray"> Height : </span> <span class="resultshow"> 53 m</span></p>
-                                <p><span class="labelgray"> Length : </span> <span class="resultshow">845.8 </span></p>
-                                <p><span class="labelgray"> No. of Gate : </span> <span class="resultshow"> 4</span></p>
-                                <p><span class="labelgray"> Reservoir Level : </span> <span class="resultshow"> 871.42
-                                        m</span></p>
+                                <p><span class="labelgray"> River : </span> <span class="resultshow">Kabini River, a
+                                        tributary of Cauvery River </span></p>
+                                <p><span class="labelgray"> Location : </span> <span class="resultshow">
+                                        Heggadadevanakote Taluk, Mysore</span></p>
+                                <p><span class="labelgray"> Gross Storage Capacity : </span> <span class="resultshow">
+                                        19.5 TMC</span></p>
+                                <p><span class="labelgray"> Full Reservoir Level : </span> <span class="resultshow">2284
+                                        ft</span></p>
+                                <p><span class="labelgray"> Height of dam above river bed level : </span> <span
+                                        class="resultshow"> 166 ft</span></p>
+                                <p><span class="labelgray"> Length : </span> <span class="resultshow">12927 ft</span>
+                                </p>
+                                <p><span class="labelgray"> Number of gates : </span> <span class="resultshow"> 4</span>
+                                </p>
+
                                 <p><span class="labelgray"> Type : </span> <span class="resultshow"> Earth-fill, Gravity
                                         & Masonry dam</span></p>
-                                <p><span class="labelgray"> Reservoir Area : </span> <span class="resultshow"> 19.081
+                                <p><span class="labelgray"> Catchment Area : </span> <span class="resultshow"> 2142
                                         km²</span></p>
                                 <p><span class="labelgray"> Completed Year : </span> <span class="resultshow">
-                                        1982</span></p>
-                                <p><span class="labelgray"> Purpose : </span> <span class="resultshow"> Irrigation &
-                                        Hydroelectric</span></p>
+                                        1974</span></p>
+                                <p><span class="labelgray"> Purpose : </span> <span class="resultshow"> Irrigation and
+                                        hydroelectric</span></p>
                             </div>
 
                         </div>
@@ -1266,6 +1371,17 @@
                                                 href="#"></a> Soil Moisture</li>
                                         <li onclick="callButtonGraph('kabini','simulated','evapotranspiration')"><a
                                                 href="#"></a> Evapotranspiration</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <span class="labelgray"> Forecast Evaluation :</span>
+                                    <ul class="simulated">
+                                        <li onclick="callButtonGraph('kabini','simulated','inflow')"><a href="#"></a>
+                                            Inflow</li>
+
+                                        <li onclick="callButtonGraph('kabini','simulated','storage')"><a href="#"></a>
+                                            Storage</li>
+
                                     </ul>
                                 </div>
                             </div>
