@@ -1046,7 +1046,7 @@ input[type='date'] {
   color: #00a9f1;
   position: absolute;
   right: 10px;
-  top: 40px;
+  top: 360px;
   border-radius: 4px;
 }
 .forcast center {
@@ -1149,7 +1149,7 @@ input[type='date'] {
   color: #00a9f1;
   position: absolute;
   right: 10px;
-  top: 40px;
+  top: 36px;
   border-radius: 4px;
   border-radius: 15px;
   box-shadow: 0px 1px 2px 0 rgb(0 0 0 / 94%);
@@ -1177,6 +1177,22 @@ input[type='date'] {
   font-weight: 700;
 }
 
+.datedayforcast1 {
+  background-color: #004370;
+  /* float: right; */
+  padding: 8px;
+  font-size: 10px;
+  color: #ffffff;
+  position: absolute;
+  right: 10px;
+  top: 16px;
+  border-radius: 4px;
+  border-radius: 15px;
+  box-shadow: 0px 1px 2px 0 rgb(0 0 0 / 94%);
+  background-image: linear-gradient(to top, #004370, #65cdfb);
+  width: 18%;
+}
+
 .datedayforcast {
   background-color: #004370;
   /* float: right; */
@@ -1185,7 +1201,7 @@ input[type='date'] {
   color: #ffffff;
   position: absolute;
   right: 10px;
-  top: 40px;
+  top: 36px;
   border-radius: 4px;
   border-radius: 15px;
   box-shadow: 0px 1px 2px 0 rgb(0 0 0 / 94%);
