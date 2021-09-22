@@ -1,30 +1,54 @@
 var reservoirDetails = [];
 
 $(window).load(function () {
+  $('#selectedReservoir').val('');
+  $('#selectedButton').val('');
+
+  // $('#krs p input[name=predictedDays]:first-child').attr('checked', true);
+
   $('.buttonsection ul.observed li').click(function () {
     var varible = $(this).text();
 
     if (['Storage'].includes(varible.trim())) {
-      localStorage.setItem('buttonClicked', 'storage');
+      $('#selectedButton').val('storage');
+      // localStorage.setItem('buttonClicked', 'storage');
     }
     if (['Inflow'].includes(varible.trim())) {
-      localStorage.setItem('buttonClicked', 'inflow');
+      $('#selectedButton').val('inflow');
+
+      // localStorage.setItem('buttonClicked', 'inflow');
     }
   });
   $('.buttonsection ul.forecast li').click(function () {
     var varible = $(this).text();
 
     if (['Storage'].includes(varible.trim())) {
-      localStorage.setItem('buttonClicked', 'storage');
+      $('#selectedButton').val('storage');
+
+      // localStorage.setItem('buttonClicked', 'storage');
     }
     if (['Inflow'].includes(varible.trim())) {
-      localStorage.setItem('buttonClicked', 'inflow');
+      $('#selectedButton').val('inflow');
+
+      // localStorage.setItem('buttonClicked', 'inflow');
     }
   });
   // executes when complete page is fully loaded, including all frames, objects and images
 });
 
 function callGraph(river, type, button) {
+  $('#selectedReservoir').val(river);
+  // $('#selectedButton').val(type);
+  if (!button) {
+    button = $('#selectedButton').val();
+  }
+
+  // button = $('#selectedButton').val();
+
+  // $('#'+river+ "p input:radio[value='30']").prop('checked',true);
+  // $('#predictedDaysa').attr('checked', 'checked');
+  // $('#krs p input:radio[name="predictedDays"][value="30"]').attr("checked", "checked");
+
   var riverFolder = '';
   riverFolder = river == 'hemavathi' ? 'hemavathi' : riverFolder;
   riverFolder = river == 'harangi' ? 'harangi' : riverFolder;
@@ -51,7 +75,7 @@ function callGraph(river, type, button) {
   var noOfDays = $('#' + river + ' input[name=predictedDays]:checked').val();
 
   console.log('noOfDays', noOfDays);
-  let n = 90;
+  let n = noOfDays;
 
   $.ajaxSetup({ async: false });
   var annotationVal = [];
@@ -119,6 +143,12 @@ function callGraph(river, type, button) {
 }
 
 function callButtonGraph(river, type, button) {
+  $('#selectedReservoir').val('');
+  $('#selectedButton').val('');
+
+  // $('#'+river+ 'p input:radio[value=30]'").prop('checked',true);
+  //          $("#krs-forcast p input:radio[value='60']").prop('checked',true);
+
   var riverFolder = '';
   riverFolder = river == 'hemavathi' ? 'hemavathi' : riverFolder;
   riverFolder = river == 'harangi' ? 'harangi' : riverFolder;
@@ -140,6 +170,10 @@ function callButtonGraph(river, type, button) {
   graphId = river == 'harangi' ? 56 : graphId;
   graphId = river == 'kabini' ? 58 : graphId;
   graphId = river == 'krs' ? 57 : graphId;
+
+  $('.' + river + '-buttons ul.' + type + ' li:first-child').addClass(
+    'buttonactive'
+  );
 
   if (button == 'level') {
     document.getElementById(river + '-unit').innerHTML = ' ft';
@@ -202,6 +236,7 @@ $(document).ready(function () {
       $('.extrasectionforinflow').css('display', 'none');
       $('.extrasectionforforecast').css('display', 'flex');
     } else {
+      $('.extrasectionforinflow').css('display', 'none');
       $('.extrasectionforforecast').css('display', 'none');
     }
   });
@@ -209,6 +244,11 @@ $(document).ready(function () {
   $('.buttonsection ul.forecast li').click(function () {
     var varible = $(this).text();
     // console.log($(this), '--this');
+
+    $('#harangi-levelgraphdiv').text('');
+    $('#hemavathi-levelgraphdiv').text('');
+    $('#krs-levelgraphdiv').text('');
+    $('#kabini-levelgraphdiv').text('');
 
     // if (['Storage', 'Inflow'].includes(varible.trim())) {
     //   $('.buttonsection ul li').removeClass('buttonactive');
@@ -219,7 +259,7 @@ $(document).ready(function () {
     //   $('.buttonsection ul li').removeClass('buttonactive');
     //   $(this).addClass('buttonactive');
     // }
-
+    $('.buttonsection ul li').removeClass('greenactive');
     $('.buttonsection ul li').removeClass('buttonactive');
     $(this).addClass('buttonactive');
 
@@ -256,12 +296,14 @@ function formatDate(input) {
 
 function callForecast(reservoirsName) {
   var noOfDays = $(
-    '#' + reservoirsName + ' input[name=predictedDays]:checked'
+    '#' + reservoirsName + '-forcast input[name=predictedDays1]:checked'
   ).val();
+
   var selectedDate = formatDate(
-    $('#' + reservoirsName + ' input[name=predictedDate]').val()
+    $('#' + reservoirsName + '-forcast input[name=predictedDate]').val()
   );
-  var buttonClicked = localStorage.getItem('buttonClicked');
+  // var buttonClicked = localStorage.getItem('buttonClicked');
+  var buttonClicked = $('#selectedButton').val();
 
   console.log('selectedDate : ', selectedDate);
   console.log('noOfDays : ', noOfDays);
@@ -494,11 +536,15 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  $('.onclickbtntwo').click(function () {
-    $('.showDivtwo').hide();
-    var varible = $(this).attr('id');
-    $('.' + varible).show();
+  $('.pie').click(function () {
+    $('.hemavathipage').show();
     $('.body_starts').hide();
+    $('#word1').css('color', '#0070a6');
+    $('#word').css('color', '#00a9f1');
+    $('#pieactive').show();
+    $('#mapinactive').show();
+    $('#pieinactive').hide();
+    $('#mapactive').hide();
     if (varible == 56) {
       graphPath = 'Reservoirs-Data/harangi/level.csv';
       graphId = 'harangi';
@@ -511,6 +557,49 @@ $(document).ready(function () {
     } else if (varible == 55) {
       graphPath = 'Reservoirs-Data/hemavathi/level.csv';
       graphId = 'hemavathi';
+    }
+    console.log(graphPath);
+
+    g3 = new Dygraph(
+      document.getElementById(graphId + '-levelgraphdiv'),
+      graphPath,
+      {
+        rollPeriod: 1,
+      }
+    );
+  });
+});
+
+$(document).ready(function () {
+  $('.onclickbtntwo').click(function () {
+    $('.showDivtwo').hide();
+    var varible = $(this).attr('id');
+    $('.' + varible).show();
+    $('.body_starts').hide();
+
+    $('#word1').css('color', '#0070a6');
+    $('#word').css('color', '#00a9f1');
+    $('#pieactive').css('display', 'initial');
+    $('#mapinactive').css('display', 'initial');
+    $('#pieinactive').css('display', 'none');
+    $('#mapactive').css('display', 'none');
+
+    if (varible == 56) {
+      callButtonGraph('harangi', 'observed', 'level');
+      // graphPath = 'Reservoirs-Data/harangi/level.csv';
+      // graphId = 'harangi';
+    } else if (varible == 57) {
+      callButtonGraph('krs', 'observed', 'level');
+      // graphPath = 'Reservoirs-Data/krs/level.csv';
+      // graphId = 'krs';
+    } else if (varible == 58) {
+      callButtonGraph('kabini', 'observed', 'level');
+      // graphPath = 'Reservoirs-Data/kabini/level.csv';
+      // graphId = 'kabini';
+    } else if (varible == 55) {
+      callButtonGraph('hemavathi', 'observed', 'level');
+      // graphPath = 'Reservoirs-Data/hemavathi/level.csv';
+      // graphId = 'hemavathi';
     }
 
     // $.ajaxSetup({ async: false });
@@ -554,17 +643,17 @@ $(document).ready(function () {
     // });
     // $.ajaxSetup({ async: true });
 
-    console.log(graphPath);
+    // console.log(graphPath);
 
-    g3 = new Dygraph(
-      document.getElementById(graphId + '-levelgraphdiv'),
-      graphPath,
-      {
-        strokeWidth: 2.0,
-        color: 'rgb(0,171,241)',
-        rollPeriod: 1,
-      }
-    );
+    // g3 = new Dygraph(
+    //   document.getElementById(graphId + '-levelgraphdiv'),
+    //   graphPath,
+    //   {
+    //     strokeWidth: 2.0,
+    //     color: 'rgb(0,171,241)',
+    //     rollPeriod: 1,
+    //   }
+    // );
   });
 });
 

@@ -4253,7 +4253,7 @@
                         'When set, this callback gets called before the chart is drawn. It details on how to use this.',
                     },
                     width: {
-                      default: '480',
+                      default: '600',
                       labels: ['Overall display'],
                       type: 'integer',
                       description:
@@ -7806,7 +7806,7 @@
             Dygraph.NAME = 'Dygraph';
             Dygraph.VERSION = '2.1.0'; // Various default values
             Dygraph.DEFAULT_ROLL_PERIOD = 1;
-            Dygraph.DEFAULT_WIDTH = 480;
+            Dygraph.DEFAULT_WIDTH = 600;
             Dygraph.DEFAULT_HEIGHT = 320; // For max 60 Hz. animation:
             Dygraph.ANIMATION_STEPS = 12;
             Dygraph.ANIMATION_DURATION = 200;

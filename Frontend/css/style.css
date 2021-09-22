@@ -150,7 +150,7 @@ body {
 
 .left_Navigation,
 #left_Navigation {
-  max-width: 250px;
+  max-width: 200px;
   width: 65px;
   background: #ffffff;
   box-shadow: 7px -1px 16px 0px rgb(0 0 0 / 20%);
@@ -255,10 +255,13 @@ li.leftnav {
 #logo .ic {
   vertical-align: middle;
   margin-right: 15px;
-  font-size: 30px;
+  font-size: 20px;
   width: 40px;
 }
-
+#mapinactive,
+#pieactive {
+  display: none;
+}
 .rightside input {
   border: 0px;
   border-radius: 1px;
@@ -320,6 +323,7 @@ li.leftnav {
   color: #00a9f1;
   font-weight: 600;
   margin-left: 12px;
+  font-size: 16px;
 }
 
 a {
@@ -339,7 +343,7 @@ li.active a {
   max-width: 1600px;
   background-repeat: no-repeat;
   max-height: 964px;
-  height: 85vh;
+  height: 87vh;
   position: relative;
   background-size: 100% 100%;
   margin: 15px;
@@ -356,8 +360,8 @@ li.active a {
   object-fit: contain;
 }
 .hemavathi .markerpin img {
-  left: -60px;
-  top: 35px;
+  left: -46px;
+  top: 44px;
 }
 .harangi .markerpin img {
   top: -7%;
@@ -385,20 +389,20 @@ li.active a {
 }
 
 .hemavathi {
-  top: 6.5%;
+  top: 11.5%;
   left: 26%;
 }
 .harangi {
-  top: 41.5%;
-  left: 18%;
+  top: 43.5%;
+  left: 17.5%;
 }
 
 .kabini {
-  bottom: 4.5%;
-  left: 38%;
+  bottom: 5.5%;
+  left: 37.5%;
 }
 .krs {
-  top: 28%;
+  top: 37%;
   left: 48.5%;
 }
 .tablestart td {
@@ -533,7 +537,7 @@ span.top {
   width: 100%;
 }
 .percentshow {
-  width: 365px;
+  width: 240px;
 }
 .A-49-decrease-in-predicted-rainfall-will-affect-34-Reservoir {
   border: 10px dotted #f3f3f3;
@@ -572,12 +576,13 @@ span.top {
   font-size: 14px;
 }
 #logo .ic img {
-  /* width: 20px;
-  height: 30px; */
   margin-top: -10px;
   /* margin-left: 8px; */
+  width: 25px;
 }
-
+#wordlogo {
+  display: none;
+}
 .conainer {
   width: 600px;
   margin: 100px auto;
@@ -645,15 +650,20 @@ span.top {
 }
 
 .graphshow {
-  /*  height: 350px;*/
+  /* height: 350px; */
   width: 100%;
+  max-width: 40%;
   background-repeat: no-repeat;
   background-size: 100% 100% !important;
 }
 
 .levelshow {
+  padding: 0px !important;
 }
-
+.levelshow {
+  max-width: 60%;
+  width: 60%;
+}
 .secondscreen {
   flex-wrap: wrap;
   display: flex;
@@ -668,17 +678,20 @@ span.top {
   background: #ffffff;
   box-shadow: 0px 4px 21px 0 rgb(0 0 0 / 5%);
   margin: 10px 10px;
-  padding: 10px;
+  padding: 0px !important;
   border-radius: 10px;
-  flex-basis: calc(45% - 0px);
+  flex-basis: calc(54% - 0px);
   position: relative;
 }
-
+.graphsection {
+  width: 60%;
+  max-width: 60%;
+}
 /*dam section css*/
 
 .circle-chart {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
 }
 
 .circle-chart__circle {
@@ -717,10 +730,12 @@ span.top {
   alignment-baseline: after-edge;
   text-anchor: middle;
   font-size: 6px;
+  fill: #00a9f1;
+  font-weight: 600;
 }
 
 .success-stroke {
-  stroke: #00c851;
+  stroke: #00a9f1;
 }
 
 .warning-stroke {
@@ -816,8 +831,9 @@ span.top {
   }
 }
 .imagesection img {
-  width: 300px;
-  margin: 7% auto;
+  width: 470px;
+  margin: 0% auto;
+  padding: 10px;
   text-align: center;
   justify-content: center;
   display: flex;
@@ -846,7 +862,9 @@ span.top {
   right: 20px;
 }
 .contentshow {
-  /*    padding: 0px!important;*/
+  /* padding: 0px!important; */
+  width: 40%;
+  max-width: 40%;
 }
 .heading {
   padding: 7px;
@@ -855,7 +873,7 @@ span.top {
   text-align: center;
   border-radius: 10px 10px 0px 0px;
   font-size: 14px;
-  margin: -10px -10px 20px -10px;
+  margin: 0px 0px 20px 0px;
 }
 .contentforriver {
   margin-left: 50px;
@@ -1021,8 +1039,7 @@ img {
   width: 100%;
 }
 .leftnav img {
-  width: 25px;
-
+  width: 20px;
   vertical-align: initial;
 }
 
@@ -1038,6 +1055,22 @@ input[type='date'] {
   width: 36%;
 }
 
+.datedayforcast1 {
+  background-color: #004370;
+  /* float: right; */
+  padding: 8px;
+  font-size: 10px;
+  color: #ffffff;
+  /* position: absolute;
+  right: 10px;
+  top: 40px; */
+  border-radius: 4px;
+  border-radius: 15px;
+  box-shadow: 0px 1px 2px 0 rgb(0 0 0 / 94%);
+  background-image: linear-gradient(to top, #004370, #65cdfb);
+  width: 18%;
+}
+
 .datedayforcast {
   background-color: #004370;
   /* float: right; */
@@ -1046,7 +1079,7 @@ input[type='date'] {
   color: #00a9f1;
   position: absolute;
   right: 10px;
-  top: 360px;
+  top: 34px;
   border-radius: 4px;
 }
 .forcast center {
@@ -1099,9 +1132,33 @@ input[type='date'] {
 .hemavathimarker {
   position: absolute;
   right: 0;
-  left: 0;
+  left: 110px;
   margin: auto;
   top: 29%;
+}
+
+.harangimarker {
+  position: absolute;
+  right: 0;
+  left: 94px;
+  margin: auto;
+  top: 20%;
+}
+
+.krsmarker {
+  position: absolute;
+  right: 0;
+  left: 200px;
+  margin: auto;
+  top: 36%;
+}
+
+.kabinimarker {
+  position: absolute;
+  right: 0;
+  left: 0;
+  margin: auto;
+  top: 27%;
 }
 .topright,
 .showDivtwo {
@@ -1115,15 +1172,19 @@ input[type='date'] {
 .onclickbtnone {
   cursor: pointer;
 }
+#wordlogo img {
+  margin: -8px 0px 0px -5px;
+  width: 90px;
+}
 .riverlines {
   background-image: url(../doc/rivers-n.png);
   width: 100%;
   max-width: 1600px;
   background-repeat: no-repeat;
   max-height: 964px;
-  height: 85vh;
+  height: 87vh;
   position: relative;
-  /* background-size: 100% 100%; */
+  background-size: 100% 100%;
   /* margin: 15px; */
   border-radius: 15px;
 }
@@ -1149,7 +1210,7 @@ input[type='date'] {
   color: #00a9f1;
   position: absolute;
   right: 10px;
-  top: 36px;
+  top: 34px;
   border-radius: 4px;
   border-radius: 15px;
   box-shadow: 0px 1px 2px 0 rgb(0 0 0 / 94%);
@@ -1162,46 +1223,32 @@ input[type='date'] {
   font-weight: 600;
   color: #00a9f1;
 }
-
+.single-skill center {
+  color: #01a9f1;
+  font-weight: 500;
+}
 .circleText {
   position: absolute;
-  top: 62px;
+  top: 52px;
   text-align: center;
   justify-content: center;
   align-self: center;
   text-anchor: middle;
   left: 0;
   right: 0;
-  font-size: 14px;
+  font-size: 12px;
   color: #00a9f1;
   font-weight: 700;
 }
 
-.datedayforcast1 {
-  background-color: #004370;
-  /* float: right; */
-  padding: 8px;
-  font-size: 10px;
-  color: #ffffff;
-  position: absolute;
-  right: 10px;
-  top: 16px;
-  border-radius: 4px;
-  border-radius: 15px;
-  box-shadow: 0px 1px 2px 0 rgb(0 0 0 / 94%);
-  background-image: linear-gradient(to top, #004370, #65cdfb);
-  width: 18%;
-}
-
 .datedayforcast {
   background-color: #004370;
-  /* float: right; */
   padding: 8px;
   font-size: 10px;
   color: #ffffff;
   position: absolute;
   right: 10px;
-  top: 36px;
+  top: 40px;
   border-radius: 4px;
   border-radius: 15px;
   box-shadow: 0px 1px 2px 0 rgb(0 0 0 / 94%);
@@ -1225,6 +1272,14 @@ input[type='date'] {
 .dayshow {
   font-size: 12px;
 }
+
+.dayshow {
+  width: 77%;
+}
+.rowtwo {
+  display: flex;
+}
+
 input[type='date'] {
   width: 74%;
 }
@@ -1241,5 +1296,34 @@ a.backbtn {
 @media (max-width: 1366px) {
   .nameShow {
     display: none;
+  }
+}
+@media (max-width: 1366px) and (min-width: 1366px) {
+  .krs {
+    top: 25%;
+    left: 48%;
+  }
+  .hemavathi {
+    top: 4%;
+    left: 24%;
+  }
+}
+@media (max-width: 1600px) and (min-width: 1600px) {
+  .hemavathi {
+    top: 4%;
+    left: 24%;
+  }
+  .krs {
+    top: 32%;
+    left: 47.5%;
+  }
+}
+@media (max-width: 1920px) and (min-width: 1920px) {
+  .krs {
+    left: 47.5%;
+  }
+  .hemavathi {
+    top: 7%;
+    left: 24%;
   }
 }
