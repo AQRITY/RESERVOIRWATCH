@@ -3,7 +3,7 @@
 
 ### Welcome to our repository for the WAVE2WEB Hackathon
 
-Our interactive dashboard helps in dissemination of information regarding near-real time prediction of water availability in four dams of the Upper Cauvery river basin that supply water to Bangalore City. We have adopted a physically described process-based approach that lends information to a machine learning model to come about with a 30, 60 and 90 day prediction of storage capacity and inflows. Prediction of water storage and inflow to a reservoir helps in deciding outflows from the dam to fulfil different water demands. This will be useful for the public and various stakeholders in making scientifically informed decisions.
+Our interactive dashboard helps in dissemination of information regarding near-real time prediction of water availability in four dams of the Upper Cauvery river basin that supply water to Bengaluru City. We have adopted a physically described process-based approach that lends information to a machine learning model to come about with a 30, 60 and 90 day prediction of storage capacity and inflows. Prediction of water storage and inflow to a reservoir helps in deciding outflows from the dam to fulfil different water demands. This will be useful for the public and various stakeholders in making scientifically informed decisions.
 
 ### The repository has been structured based on
 - Python scripts used to extract data from satellite and reanalysis data
