@@ -9,15 +9,12 @@ import rioxarray as rio
 import numpy as np
 import datetime as dt
 import xarray as xr
-import proplot as plot
 import pandas as pd
 import geopandas as gpd
 from shapely.geometry import mapping
 import cartopy.crs as ccrs
 from cartopy.io.shapereader import Reader
-import imdlib as imd
 import statsmodels.api as sm
-import matplotlib.dates as mdates
 #################################
 rf=xr.open_dataset('D:/IMD_data/rain_1951_2020.nc')
 ######################################################
