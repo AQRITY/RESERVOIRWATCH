@@ -8,12 +8,12 @@ Created on Wed Aug 25 11:31:26 2021
 import rioxarray as rio
 import numpy as np
 import xarray as xr
-import proplot as plot
 import pandas as pd
 import geopandas as gpd
 from shapely.geometry import mapping
 import cartopy.crs as ccrs
 from cartopy.io.shapereader import Reader
+import matplotlib.pyplot as plt
 #########################################
 #%%!!!!!! Use this section only to downscale from hourly to daily !!!!##
 
@@ -54,16 +54,6 @@ ds_1d_wm = pd.Series(data=ds_daily_wm, name = 'ET (mm/day)')
 ####
 ## Saving as csv file ####
 ds_1d_wm.to_csv('ET_Scripts/et_kaveri.csv')   # change folder accordingly
-#%% Plotting the time-series ###
-### Ignore if no pro-plot package ####
-# fig, axs = plot.subplots(ncols=1 ,width=10, height=5, nrows=1, sharey=False, sharex=False)
-# axs.format(
-#         abc=False, abcstyle='(a)', abcloc='lr', gridminor=False)
-
-# axs[0].plot(ds_1d_wm,color='b', label='ET', legend='ul',
-#          linewidth=2 )
-# axs[0].format( xlabel='Time',
-#               ylabel='mm/day')
 #%% Plotting using default matplotlib ###
 ds_1d_wm.plot(color='blue', ylabel='mm/day', xlabel='Time', 
               title='ET in Selected basin')
